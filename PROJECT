@@ -1,0 +1,8 @@
+domain: sdbrett.com
+layout: helm.sdk.operatorframework.io/v1
+projectName: vault
+resources:
+- group: vault
+  kind: Vault
+  version: v1alpha1
+version: 3-alpha

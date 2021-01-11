@@ -1,0 +1,20 @@
+# permissions for end users to view vaults.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vault-viewer-role
+rules:
+- apiGroups:
+  - vault.sdbrett.com
+  resources:
+  - vaults
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - vault.sdbrett.com
+  resources:
+  - vaults/status
+  verbs:
+  - get

@@ -1,0 +1,6 @@
+# Use the 'create api' subcommand to add watches to this file.
+- group: vault.sdbrett.com
+  version: v1alpha1
+  kind: Vault
+  chart: helm-charts/vault
+# +kubebuilder:scaffold:watch
