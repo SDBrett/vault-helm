@@ -31,8 +31,13 @@ spec:
         resources:
           limits:
             cpu: 100m
-            memory: 90Mi
+            memory: 250Mi
           requests:
             cpu: 100m
             memory: 60Mi
+        env:
+        - name: WATCH_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
       terminationGracePeriodSeconds: 10
