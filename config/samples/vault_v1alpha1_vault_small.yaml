@@ -1,0 +1,24 @@
+apiVersion: vault.sdbrett.com/v1alpha1
+kind: Vault
+metadata:
+  name: vault-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/vault/values.yaml
+  global:
+    enabled: true
+    openshift: true
+  server:
+    standalone:
+      enabled: true
+    route:
+      enabled: true
+      host: vault
+    service:
+      enabled: true
+      port: 8200
+      targetPort: 8200
+    dataStorage:
+      accessMode: ReadWriteOnce
+      enabled: true
+      mountPath: /vault/data
+      size: 10Gi      
