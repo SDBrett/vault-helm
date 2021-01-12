@@ -8,70 +8,136 @@ rules:
 ##
 # We need to get namespaces so the operator can read namespaces to ensure they exist
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - namespaces
+    - namespaces
   verbs:
-  - get
+    - get
 # We need to manage Helm release secrets
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - secrets
+    - secrets
   verbs:
-  - "*"
+    - "*"
 # We need to create events on CRs about things happening during reconciliation
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - events
+    - events
   verbs:
-  - create
-
-##
-## Rules for vault.sdbrett.com/v1alpha1, Kind: Vault
-##
+    - create
 - apiGroups:
-  - vault.sdbrett.com
+    - ""
   resources:
-  - vaults
-  - vaults/status
-  - vaults/finalizers
+    - secrets
+    - pods
+    - pods/exec
+    - pods/log
+    - persistentVolumeClaim
+    - persistentVolumes
+    - services
+    - serviceaccounts
+    - configmaps
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- verbs:
-  - "*"
-  apiGroups:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - "admissionregistration.k8s.io"
+  resources:
+    - mutatingwebhookconfigurations
+  verbs:
+    - get
+    - list
+    - watch
+    - delete
+    - create
+    - update
+    - patch
+- apiGroups:
   - "rbac.authorization.k8s.io"
   resources:
-  - "clusterrolebindings"
-  - "clusterroles"
-- verbs:
-  - "*"
-  apiGroups:
-  - "admissionregistration.k8s.io"
+    - clusterroles
+    - clusterrolebindings
+    - roles
+    - rolebindings
+  verbs:
+    - get
+    - list
+    - watch
+    - delete
+    - create
+    - update
+    - patch
+- apiGroups:
+    - vault.sdbrett.com
   resources:
-  - "mutatingwebhookconfigurations"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
+    - vaults
+    - vaults/status
+    - vaults/finalizers
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - "rbac.authorization.k8s.io"
   resources:
-  - "configmaps"
-  - "serviceaccounts"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
+    - "clusterrolebindings"
+    - "clusterroles"
+  verbs:
+    - "*"
+- apiGroups:
+    - "admissionregistration.k8s.io"
   resources:
-  - "deployments"
-  - "statefulsets"
-
+    - "mutatingwebhookconfigurations"
+  verbs:
+    - "*"
+- apiGroups:
+    - ""
+  resources:
+    - "configmaps"
+    - "serviceaccounts"
+    - "services"
+  verbs:
+    - "*"
+- apiGroups:
+    - "apps"
+  resources:
+    - "deployments"
+    - "statefulsets"
+  verbs:
+    - "*"
+- apiGroups:
+    - "networking.k8s.io"
+  resources:
+    - "networkpolicies"
+  verbs:
+    - get
+    - list
+    - watch
+    - delete
+    - create
+    - update
+    - patch
+- apiGroups:
+    - "route.openshift.io"
+  resources:
+    - "routes"
+  verbs:
+    - get
+    - list
+    - watch
+    - delete
+    - create
+    - update
+    - patch
 # +kubebuilder:scaffold:rules
