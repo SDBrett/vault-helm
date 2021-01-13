@@ -1,4 +1,4 @@
-VERSION=0.0.6
+VERSION=0.0.8
 OPERATOR_IMAGE=quay.io/brejohns/vault-operator:$VERSION
 BUNDLE_IMAGE=quay.io/brejohns/vault-operator-bundle:$VERSION
 IMG=quay.io/brejohns/vault:$VERSION
@@ -10,12 +10,8 @@ TEST_NAMESPACE=vault-test
 oc new-project $OPERATOR_NAMESPACE
 oc new-project $TEST_NAMESPACE
 
-
-make docker-build docker-push IMG=$OPERATOR_IMAGE
-make install
-
-make deploy IMG=$OPERATOR_IMAGE
-
+make docker-build IMG=$IMG
+make docker-push IMG=$IMG
 
 make bundle CHANNELS=$BUNDLE_CHANNELS DEFAULT_CHANNEL=$BUNDLE_CHANNELS VERSION=$VERSION IMG=$IMG 
 
@@ -27,7 +23,9 @@ docker push $INDEX_IMAGE
 
 operator-sdk run bundle $BUNDLE_IMAGE --index-image=$INDEX_IMAGE --namespace $OPERATOR_NAMESPACE --verbose
 
+rm -rf bundle/*
 
-oc delete crd vaults.vault.sdbrett.com
 oc delete project $OPERATOR_NAMESPACE
 oc delete project $TEST_NAMESPACE
+
+oc delete crd vaults.vault.sdbrett.com
