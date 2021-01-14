@@ -13,3 +13,6 @@ bin
 *.swo
 *~
 bundle
+
+registry.yaml
+deploy.sh
