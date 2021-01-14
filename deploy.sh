@@ -1,4 +1,4 @@
-VERSION=0.0.8
+VERSION=0.0.17
 OPERATOR_IMAGE=quay.io/brejohns/vault-operator:$VERSION
 BUNDLE_IMAGE=quay.io/brejohns/vault-operator-bundle:$VERSION
 IMG=quay.io/brejohns/vault:$VERSION
@@ -27,5 +27,5 @@ rm -rf bundle/*
 
 oc delete project $OPERATOR_NAMESPACE
 oc delete project $TEST_NAMESPACE
-
+sleep 15
 oc delete crd vaults.vault.sdbrett.com
