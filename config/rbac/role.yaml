@@ -1,5 +1,5 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   name: manager-role
 rules:
@@ -88,13 +88,6 @@ rules:
     - patch
     - update
     - watch
-- apiGroups:
-    - "rbac.authorization.k8s.io"
-  resources:
-    - "clusterrolebindings"
-    - "clusterroles"
-  verbs:
-    - "*"
 - apiGroups:
     - "admissionregistration.k8s.io"
   resources:
