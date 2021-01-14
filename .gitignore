@@ -12,7 +12,6 @@ bin
 *.swp
 *.swo
 *~
-bundle
 
 registry.yaml
 deploy.sh

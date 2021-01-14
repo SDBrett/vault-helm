@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: quay.io/brejohns/vault
-  newTag: 0.0.8
+  newTag: 0.0.1
