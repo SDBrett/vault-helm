@@ -187,6 +187,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
+    description: Provides an operator built on the Hashicorp Helm chart
     operators.operatorframework.io/builder: operator-sdk-v1.2.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
   name: vault.v0.0.1
@@ -399,6 +400,7 @@ spec:
   - email: brett@sdbrett.com
     name: Brett Johnson
   maturity: alpha
+  minKubeVersion: 4.4.17
   provider:
     name: SDBrett
     url: sdbrett.com
