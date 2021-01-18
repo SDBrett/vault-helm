@@ -15,4 +15,4 @@ bin
 
 registry.yaml
 deploy.sh
-.DS_STORE
+.DS_Store
