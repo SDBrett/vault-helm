@@ -1,6 +1,6 @@
 domain: sdbrett.com
 layout: helm.sdk.operatorframework.io/v1
-projectName: vault
+projectName: vault-helm
 resources:
 - group: vault
   kind: Vault
