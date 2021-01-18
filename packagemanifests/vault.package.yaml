@@ -1,5 +1,0 @@
-channels:
-- currentCSV: vault.v0.0.1
-  name: alpha
-defaultChannel: alpha
-packageName: vault
