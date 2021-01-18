@@ -22,7 +22,7 @@ spec:
       labels:
         control-plane: controller-manager
     spec:
-      serviceAccountName: vault-operator
+      serviceAccountName: vault-helm
       containers:
       - image: controller:latest
         args:
