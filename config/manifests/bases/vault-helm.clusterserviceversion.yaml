@@ -2,6 +2,9 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
+    repository: https://github.com/SDBrett/vault-helm
+    containerImage: quay.io/brejohns/vault-helm:0.0.1
+    description: Use Helm to Deploy and manage Hashicorp Vault
     alm-examples: '[]'
     capabilities: Basic Install
     operators.operatorframework.io/builder: operator-sdk-v1.2.0
@@ -21,7 +24,7 @@ spec:
       deployments: null
     strategy: ""
   installModes:
-  - supported: false
+  - supported: true
     type: OwnNamespace
   - supported: false
     type: SingleNamespace
