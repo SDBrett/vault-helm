@@ -2,10 +2,6 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    createdAt: 2021-01-19 09:00:00
-    repository: https://github.com/SDBrett/vault-helm
-    containerImage: quay.io/brejohns/vault-helm:0.0.1
-    description: Use Helm to Deploy and manage Hashicorp Vault
     alm-examples: |-
       [
         {
@@ -191,13 +187,13 @@ metadata:
         }
       ]
     capabilities: Basic Install
+    containerImage: quay.io/brejohns/vault-helm:0.0.2
+    description: Use Helm to Deploy and manage Hashicorp Vault
     operators.operatorframework.io/builder: operator-sdk-v1.2.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
-  name: vault-helm.v0.0.1
+    repository: https://github.com/SDBrett/vault-helm
+  name: vault-helm.v0.0.2
   namespace: placeholder
-  createdAt: 2021-01-19 09:00:00
-  repository: https://github.com/SDBrett/vault-helm
-  containerImage: quay.io/brejohns/vault-helm:0.0.1
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
@@ -205,8 +201,6 @@ spec:
     - kind: Vault
       name: vaults.vault.sdbrett.com
       version: v1alpha1
-      displayName: Vault Helm
-      description: Provides Vault-Helm operators with values for the Vault Helm chart
   description: Operator for deployment and management of Hashicorp Vault instances based on the Helm chart
   displayName: Vault Helm
   icon:
@@ -214,52 +208,7 @@ spec:
     mediatype: image/svg+xml
   install:
     spec:
-      deployments:
-      - name: vault-controller-manager
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              control-plane: controller-manager
-          strategy: {}
-          template:
-            metadata:
-              labels:
-                control-plane: controller-manager
-            spec:
-              containers:
-              - args:
-                - --secure-listen-address=0.0.0.0:8443
-                - --upstream=http://127.0.0.1:8080/
-                - --logtostderr=true
-                - --v=10
-                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
-                name: kube-rbac-proxy
-                ports:
-                - containerPort: 8443
-                  name: https
-                resources: {}
-              - args:
-                - --metrics-addr=127.0.0.1:8080
-                - --enable-leader-election
-                - --leader-election-id=vault
-                env:
-                - name: WATCH_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.annotations['olm.targetNamespaces']
-                image: quay.io/brejohns/vault-helm:0.0.1
-                name: manager
-                resources:
-                  limits:
-                    cpu: 100m
-                    memory: 250Mi
-                  requests:
-                    cpu: 100m
-                    memory: 60Mi
-              serviceAccountName: vault-helm
-              terminationGracePeriodSeconds: 10
-      permissions:
+      clusterPermissions:
       - rules:
         - apiGroups:
           - ""
@@ -303,6 +252,30 @@ spec:
           - admissionregistration.k8s.io
           resources:
           - mutatingwebhookconfigurations
+          verbs:
+          - get
+          - list
+          - watch
+          - delete
+          - create
+          - update
+          - patch
+        - apiGroups:
+          - authentication.k8s.io
+          resources:
+          - tokenreviews
+          verbs:
+          - get
+          - list
+          - watch
+          - delete
+          - create
+          - update
+          - patch
+        - apiGroups:
+          - authorization.k8s.io
+          resources:
+          - subjectaccessreviews
           verbs:
           - get
           - list
@@ -387,9 +360,54 @@ spec:
           - update
           - patch
         serviceAccountName: vault-helm
+      deployments:
+      - name: vault-controller-manager
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              control-plane: controller-manager
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                control-plane: controller-manager
+            spec:
+              containers:
+              - args:
+                - --secure-listen-address=0.0.0.0:8443
+                - --upstream=http://127.0.0.1:8080/
+                - --logtostderr=true
+                - --v=10
+                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+                name: kube-rbac-proxy
+                ports:
+                - containerPort: 8443
+                  name: https
+                resources: {}
+              - args:
+                - --metrics-addr=127.0.0.1:8080
+                - --enable-leader-election
+                - --leader-election-id=vault
+                env:
+                - name: WATCH_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.annotations['olm.targetNamespaces']
+                image: quay.io/brejohns/vault-helm:0.0.2
+                name: manager
+                resources:
+                  limits:
+                    cpu: 100m
+                    memory: 250Mi
+                  requests:
+                    cpu: 100m
+                    memory: 60Mi
+              serviceAccountName: vault-helm
+              terminationGracePeriodSeconds: 10
     strategy: deployment
   installModes:
-  - supported: false
+  - supported: true
     type: OwnNamespace
   - supported: false
     type: SingleNamespace
@@ -401,6 +419,9 @@ spec:
   - Helm
   - Vault
   - Hashicorp
+  links:
+  - name: Vault Helm
+    url: https://vault-helm.domain
   maintainers:
   - email: brett@sdbrett.com
     name: Brett Johnson
@@ -408,4 +429,4 @@ spec:
   provider:
     name: SDBrett
     url: sdbrett.com
-  version: 0.0.1
+  version: 0.0.2

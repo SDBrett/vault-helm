@@ -1,5 +1,5 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: manager-role
 rules:
@@ -59,6 +59,30 @@ rules:
     - create
     - update
     - patch
+- apiGroups:
+    - authentication.k8s.io
+  verbs:
+    - get
+    - list
+    - watch
+    - delete
+    - create
+    - update
+    - patch
+  resources:
+    - tokenreviews
+- apiGroups:
+    - authorization.k8s.io
+  verbs:
+    - get
+    - list
+    - watch
+    - delete
+    - create
+    - update
+    - patch
+  resources:
+    - subjectaccessreviews
 - apiGroups:
   - "rbac.authorization.k8s.io"
   resources:
